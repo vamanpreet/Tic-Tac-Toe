@@ -6,6 +6,7 @@ let msg = document.querySelector('#msg') ;
 
 
 let turnO = true;         // Player 1-O and Player 2-X
+let count = 0;            // No. of boxes clicked
 
 
 const winPattern = [                // Possible Winning moves
@@ -32,7 +33,11 @@ boxes.forEach((box) => {
             box.style.color = "blue";
         }
         box.disabled = true;
-        checkWin();
+        count++;
+        let isWinner = checkWin();
+        if(count == 9 && !isWinner) {
+            gameDraw();
+        }
     });
 });
 
@@ -77,7 +82,11 @@ const resetGame = () => {
 };
 
 
-
+const gameDraw = () => {
+    msg.innerText = `Game was a draw`;
+    msgContainer.classList.remove("hide");
+    disableBoxes();
+};
 
 
 newGameBtn.addEventListener("click", resetGame);
